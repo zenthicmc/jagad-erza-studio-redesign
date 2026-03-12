@@ -6,6 +6,7 @@ import { useEditor, EditorContent, type Editor } from "@tiptap/react";
 import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
+import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
@@ -48,6 +49,8 @@ interface EditorRef {
   replaceText: (from: number, to: number, text: string) => void;
   insertAtPosition: (position: number, text: string) => void;
   getCursorPosition: () => number;
+  setHighlight: (from: number, to: number) => void;
+  clearHighlight: () => void;
 }
 
 interface WritingEditorProps {
@@ -608,6 +611,7 @@ export default function WritingEditor({
         heading: { levels: [1, 2, 3, 4, 5, 6] },
       }),
       Underline,
+      Highlight.configure({ multicolor: false }),
       TextAlign.configure({
         types: ["heading", "paragraph", "tableCell", "tableHeader"],
       }),
@@ -736,6 +740,25 @@ export default function WritingEditor({
         getCursorPosition: () => {
           if (!editor) return 0;
           return editor.state.selection.from;
+        },
+        setHighlight: (from: number, to: number) => {
+          if (!editor) return;
+          editor
+            .chain()
+            .setTextSelection({ from, to })
+            .setHighlight()
+            .run();
+        },
+        clearHighlight: () => {
+          if (!editor) return;
+          // Select all and unset highlight, then restore cursor
+          const docLength = editor.state.doc.content.size;
+          editor
+            .chain()
+            .setTextSelection({ from: 0, to: docLength })
+            .unsetHighlight()
+            .setTextSelection(editor.state.selection.from)
+            .run();
         },
       };
     }

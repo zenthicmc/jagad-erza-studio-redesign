@@ -790,7 +790,9 @@
     "typeToStart": "Ketik permintaan Anda di bawah untuk mulai menghasilkan konten",
     "typeToWrite": "Tulis apa saja untuk menghasilkan konten",
     "typeToModify": "Ketik instruksi Anda untuk mengubah teks yang dipilih",
-    "typeWhatToWrite": "Tulis apa yang ingin Anda tulis..."
+    "typeWhatToWrite": "Tulis apa yang ingin Anda tulis...",
+    "replaceSelection": "Ganti teks terpilih",
+    "insertAtCursor": "Sisipkan di kursor"
   },
   "dashboard": {
     "greeting": "Selamat datang kembali, {name}",

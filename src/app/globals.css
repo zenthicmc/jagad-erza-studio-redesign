@@ -165,7 +165,17 @@ body {
    Inside @layer components to override Tw4 preflight
    ======================================== */
 @layer components {
-  .markdown-render-area {
+  /* TipTap Highlight extension - AI suggestion highlight */
+.markdown-render-area mark,
+.selectable mark {
+  background-color: var(--primary);
+  color: var(--bg);
+  border-radius: 2px;
+  padding: 0 1px;
+  opacity: 0.4;
+}
+
+.markdown-render-area {
     width: 100%;
     max-width: 100%;
     overflow-wrap: break-word;

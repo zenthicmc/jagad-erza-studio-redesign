@@ -791,7 +791,9 @@
     "typeToStart": "Type your request below to start generating content",
     "typeToWrite": "Ask anything to generate content",
     "typeToModify": "Type your instruction to modify the selected text",
-    "typeWhatToWrite": "Type what you want to write about..."
+    "typeWhatToWrite": "Type what you want to write about...",
+    "replaceSelection": "Replace selection",
+    "insertAtCursor": "Insert at cursor"
   },
   "dashboard": {
     "greeting": "Welcome back, {name}",
