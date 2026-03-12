@@ -30,6 +30,7 @@ import api from "@/lib/api";
 import { downloadContent } from "@/lib/download-utils";
 import { useRouter } from "next/navigation";
 import { htmlToPlainText } from "@/lib/html-to-plain";
+import { stripMarkdown } from "@/lib/strip-markdown";
 
 interface ParaphraserProps {
   id?: string;
@@ -94,7 +95,7 @@ export default function Paraphraser({ id }: ParaphraserProps) {
   const handleCopyOutput = useCallback(async () => {
     if (!outputText) return;
     try {
-      await navigator.clipboard.writeText(outputText);
+      await navigator.clipboard.writeText(stripMarkdown(outputText));
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
     } catch {
