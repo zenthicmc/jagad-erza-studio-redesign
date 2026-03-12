@@ -782,7 +782,7 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
     <>
       <div className="flex flex-col lg:flex-row h-[calc(100vh-var(--header-height))] gap-0 overflow-hidden">
         <main className="flex-1 overflow-y-auto bg-background/20 relative flex flex-col min-w-0">
-          <div className="sticky top-0 z-20 flex items-center justify-between gap-1.5 px-5 h-[52px] border-b border-border bg-surface flex-shrink-0">
+          <div className="sticky top-0 z-20 flex items-center justify-between gap-1.5 px-5 h-10 border-b border-border bg-surface flex-shrink-0">
             <div className="flex items-center gap-3">
               {canGoBack && (
                 <button
@@ -976,7 +976,7 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
             : "w-full lg:w-[360px] xl:w-[400px]"
             } border-l border-border flex flex-col bg-surface/50 overflow-hidden transition-all duration-300 shrink-0`}
         >
-          <div className="px-4 h-[52px] flex items-center border-b border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
+          <div className="px-4 h-10 flex items-center border-b border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-lg bg-primary/15 border border-primary/25 flex items-center justify-center flex-shrink-0">
                 <MessageSquare size={13} className="text-primary" />
