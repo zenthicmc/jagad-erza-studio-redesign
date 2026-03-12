@@ -27,7 +27,9 @@ export default function LandingHeader() {
   }, []);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass shadow-sm shadow-primary/5' : 'bg-transparent py-2'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass shadow-sm shadow-primary/5' : 'bg-transparent py-2'}`}
+      style={!scrolled ? { background: 'linear-gradient(to bottom, var(--bg) 0%, transparent 100%)' } : undefined}
+    >
       <div className="max-w-7xl mx-auto px-6 h-[var(--header-height)] flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 no-underline">
           <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shadow-[0_0_15px_rgba(177,243,21,0.3)]">

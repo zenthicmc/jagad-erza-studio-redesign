@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles, Users } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { motion } from "framer-motion";
 
@@ -91,9 +91,13 @@ export default function LandingHero({
             </Link>
           </div>
 
-          <button className="group flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 text-lg font-medium text-fg rounded-2xl border border-border/50 bg-surface/30 backdrop-blur-sm hover:bg-surface hover:border-border transition-all">
-            {ctaSecondary}
-          </button>
+          <Link
+            href="/waiting-list"
+            className="group flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 text-lg font-medium text-fg rounded-2xl border border-border/50 bg-surface/30 backdrop-blur-sm hover:bg-surface hover:border-border transition-all no-underline"
+          >
+            <Users size={18} className="text-muted group-hover:text-primary transition-colors" />
+            Join Waiting List
+          </Link>
         </motion.div>
 
         <motion.div variants={itemUp} className="mt-24 grid grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-4xl mx-auto border-t border-border/40 pt-12">
