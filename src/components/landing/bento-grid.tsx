@@ -21,15 +21,15 @@ export default function BentoGrid() {
 
   const features = [
     {
-      title: "Writing Assistant",
-      description: "Generate high-quality articles, blog posts, and marketing copy in seconds with AI-powered writing.",
-      icon: <PenLine size={22} className="text-primary" />,
+      title: "AI Article",
+      description: "Organize, edit, and publish your articles seamlessly in one centralized workspace.",
+      icon: <FileText size={22} className="text-primary" />,
       href: "/signup",
     },
     {
-      title: "Article Manager",
-      description: "Organize, edit, and publish your articles seamlessly in one centralized workspace.",
-      icon: <FileText size={22} className="text-primary" />,
+      title: "Writing Assistant",
+      description: "Generate high-quality articles, blog posts, and marketing copy in seconds with AI-powered writing.",
+      icon: <PenLine size={22} className="text-primary" />,
       href: "/signup",
     },
     {
