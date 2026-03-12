@@ -158,26 +158,51 @@ export default function AppSidebar() {
 
       {sidebarOpen ? (
         <div className="p-3 shrink-0">
-          <div className="bg-surface border border-border rounded-2xl p-4 overflow-hidden">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-sm text-muted">{t("activePlan")}</span>
-              <span className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/15 text-primary text-xs font-semibold">
-                <span>👑</span>
-                Basic
-              </span>
-            </div>
+          <div className="relative rounded-2xl border border-border overflow-hidden" style={{ background: 'var(--bg)' }}>
+            {/* Top accent line */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
-            <div className="mb-4">
-              <span className="text-3xl font-bold text-foreground">150</span>
-              <p className="text-sm text-muted mt-0.5">{t("creditsRemaining")}</p>
-            </div>
+            <div className="p-4">
+              {/* Header row: label + plan badge */}
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-muted">{t("activePlan")}</span>
+                <span className="flex items-center gap-1 px-2 py-0.5 rounded-full border border-primary/25 bg-primary/10 text-primary text-[11px] font-semibold">
+                  <span className="text-[10px]">👑</span>
+                  Basic
+                </span>
+              </div>
 
-            <Link
-              href="/plans-billing"
-              className="block w-full text-center bg-gradient-to-r from-primary via-primary-dark to-primary-dark text-white text-sm font-semibold py-2.5 px-4 rounded-xl hover:opacity-90 transition-all no-underline"
-            >
-              {t("upgradePlan")}
-            </Link>
+              {/* Credits display */}
+              <div className="mb-3">
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-2xl font-bold text-foreground leading-none">150</span>
+                  <span className="text-xs text-muted">{t("creditsRemaining")}</span>
+                </div>
+              </div>
+
+              {/* Progress bar */}
+              <div className="mb-4">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] text-muted">Usage</span>
+                  <span className="text-[10px] font-medium text-foreground">150 / 200</span>
+                </div>
+                <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--surface-hover)' }}>
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-primary to-primary-dark transition-all duration-500"
+                    style={{ width: '75%' }}
+                  />
+                </div>
+              </div>
+
+              {/* Upgrade button */}
+              <Link
+                href="/plans-billing"
+                className="flex items-center justify-center gap-1.5 w-full text-center bg-primary text-bg text-xs font-semibold py-2 px-4 rounded-xl hover:bg-primary-light transition-colors no-underline"
+              >
+                <Sparkles size={12} />
+                {t("upgradePlan")}
+              </Link>
+            </div>
           </div>
         </div>
       ) : (
