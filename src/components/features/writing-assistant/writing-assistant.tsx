@@ -782,7 +782,7 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
     <>
       <div className="flex flex-col lg:flex-row h-[calc(100vh-var(--header-height))] gap-0 overflow-hidden">
         <main className="flex-1 overflow-y-auto bg-background/20 relative flex flex-col min-w-0">
-          <div className="sticky top-0 z-20 flex items-center justify-between gap-1.5 p-3 border-b border-border bg-surface/50 backdrop-blur-sm">
+          <div className="sticky top-0 z-20 flex items-center justify-between gap-1.5 px-4 py-2.5 border-b border-border bg-surface/80 backdrop-blur-sm shadow-sm">
             <div className="flex items-center gap-3">
               {canGoBack && (
                 <button
@@ -794,7 +794,7 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
                 </button>
               )}
               {canGoBack && <div className="w-px h-5 bg-border" />}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 pl-1 border-l-2 border-primary">
                 <Sparkles size={18} className="text-primary" />
                 <h1 className="text-base font-semibold text-foreground">{t("title")}</h1>
               </div>
@@ -910,7 +910,7 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
             </div>
           </div>
 
-          <div className="flex-1 p-6 relative" ref={contentRef}>
+          <div className="flex-1 p-5 relative" ref={contentRef}>
             {isLoadingArticle ? (
               <div className="flex items-center justify-center h-full">
                 <RefreshCw size={24} className="animate-spin text-primary" />
@@ -969,16 +969,16 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
           className={`${isRightSidebarCollapsed
             ? "w-0 opacity-0 overflow-hidden"
             : "w-full lg:w-[360px] xl:w-[400px]"
-            } border-l border-border flex flex-col bg-surface/30 overflow-hidden transition-all duration-300 shrink-0`}
+            } border-l border-border flex flex-col bg-surface/50 overflow-hidden transition-all duration-300 shrink-0`}
         >
-          <div className="p-4 border-b border-border flex-shrink-0">
+          <div className="px-4 py-3 border-b border-border flex-shrink-0 bg-background/40">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                <MessageSquare size={20} className="text-primary" />
+              <h2 className="text-sm font-semibold text-foreground flex items-center gap-2 pl-1 border-l-2 border-primary">
+                <MessageSquare size={16} className="text-primary" />
                 {t("chatTitle")}
               </h2>
             </div>
-            <p className="text-xs text-muted mt-1">
+            <p className="text-xs text-muted mt-1.5 pl-3">
               {hasSelectionInChat
                 ? t("modifySelectedOrType")
                 : requiresSelection
@@ -990,8 +990,8 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
             {messages.length === 0 && !hasSelectionInChat && (
               <div className="flex flex-col items-center justify-center h-full text-center">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3">
-                  <Sparkles size={24} className="text-primary" />
+                <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-3">
+                  <Sparkles size={22} className="text-primary" />
                 </div>
                 <p className="text-sm text-muted">
                   {requiresSelection
@@ -1082,7 +1082,7 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
             <div ref={messagesEndRef} />
           </div>
 
-          <div className="p-4 border-t border-border bg-surface">
+          <div className="p-3 border-t border-border bg-background/60">
             <div className="space-y-2">
               <p className="text-xs text-muted">
                 {requiresSelection && !hasSelectionInChat
@@ -1092,7 +1092,7 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
                     : t("typeToGenerate")}
               </p>
 
-              <div className="flex gap-2">
+              <div className="flex gap-2 items-end">
                 <textarea
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
@@ -1118,9 +1118,9 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
                 <button
                   onClick={() => handleSendMessage()}
                   disabled={isChatLoading || !inputMessage.trim() || (requiresSelection && !hasSelectionInChat)}
-                  className="px-3 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors self-end"
+                  className="p-2.5 bg-primary text-white rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex-shrink-0"
                 >
-                  <Send size={18} />
+                  <Send size={16} />
                 </button>
               </div>
             </div>

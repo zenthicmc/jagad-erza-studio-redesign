@@ -556,9 +556,12 @@ export function CollectionPage() {
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-6">
-            {t("collection")}
-          </h1>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-1 h-8 rounded-full bg-primary flex-shrink-0" />
+            <h1 className="text-2xl font-bold text-foreground">
+              {t("collection")}
+            </h1>
+          </div>
 
           <div className="flex items-center gap-2 mb-6">
             <div className="flex-1 min-w-0">
@@ -797,9 +800,12 @@ export function CollectionPage() {
         />
 
         <div className="mt-6">
-          <h2 className="text-lg font-semibold text-foreground mb-4">
-            {t("allItem")}
-          </h2>
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-1 h-4 rounded-full bg-primary/60 flex-shrink-0" />
+            <h2 className="text-sm font-semibold text-foreground uppercase tracking-wider">
+              {t("allItem")}
+            </h2>
+          </div>
         </div>
 
         <div className="mt-6 relative">
@@ -815,7 +821,7 @@ export function CollectionPage() {
             </div>
           ) : !isFolderSwitching && articles.length > 0 ? (
             <>
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {articles.map((article) => (
                   <ArticleCard
                     key={article.id}
@@ -831,7 +837,7 @@ export function CollectionPage() {
             </>
           ) : !isFolderSwitching ? (
             <div className="flex flex-col items-center justify-center py-20 text-center">
-              <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-surface">
+              <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-xl bg-surface border border-border">
                 <FileText className="w-8 h-8 text-muted" />
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">
@@ -847,7 +853,7 @@ export function CollectionPage() {
 
         {!isFolderSwitching && metadata.total_page > 1 && (
           <div className="flex justify-center mt-8">
-            <div className="flex gap-2">
+            <div className="flex gap-1.5 items-center p-1.5 rounded-xl border border-border bg-surface/50">
               <Button
                 variant="secondary"
                 size="sm"

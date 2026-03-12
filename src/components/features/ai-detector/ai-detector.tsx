@@ -310,7 +310,7 @@ export default function AiDetector({ id }: AiDetectorProps) {
   return (
     <>
       <div className="flex flex-col h-[calc(100vh-var(--header-height))] overflow-hidden">
-        <div className="flex items-center justify-between gap-3 p-4 border-b border-border bg-surface/50 backdrop-blur-sm flex-shrink-0">
+        <div className="flex items-center justify-between gap-3 px-4 py-2.5 border-b border-border bg-surface/80 backdrop-blur-sm shadow-sm flex-shrink-0">
           <div className="flex items-center gap-3">
             {canGoBack && (
               <button
@@ -322,7 +322,7 @@ export default function AiDetector({ id }: AiDetectorProps) {
               </button>
             )}
             {canGoBack && <div className="w-px h-5 bg-border" />}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 pl-1 border-l-2 border-primary">
               <ScanSearch size={18} className="text-primary" />
               <h1 className="text-base font-semibold text-foreground">
                 {t("title")}
@@ -373,9 +373,12 @@ export default function AiDetector({ id }: AiDetectorProps) {
           </div>
         </div>
 
-        <div className="flex-1 flex items-stretch min-h-0 p-6">
-          <div className="w-full max-w-6xl mx-auto border border-border rounded-lg bg-surface/50 shadow-sm overflow-hidden flex flex-col lg:flex-row min-h-[500px]">
+        <div className="flex-1 flex items-stretch min-h-0 p-5">
+          <div className="w-full max-w-6xl mx-auto border border-border/70 rounded-xl bg-surface/50 shadow-lg ring-1 ring-border/30 overflow-hidden flex flex-col lg:flex-row min-h-[500px]">
             <div className="flex-[2] flex flex-col border-b lg:border-b-0 lg:border-r border-border min-h-0 min-w-0">
+              <div className="flex items-center gap-2 px-4 py-2 border-b border-border/50 bg-background/30 flex-shrink-0">
+                <span className="text-[11px] font-medium text-muted uppercase tracking-wider">Input</span>
+              </div>
               {uploadedFileName && (
                 <div className="flex-shrink-0 px-4 pt-3 pb-1">
                   <span className="inline-flex items-center gap-2 text-sm text-foreground bg-background border border-primary/40 rounded-lg px-3 py-2 w-full">
@@ -499,10 +502,13 @@ export default function AiDetector({ id }: AiDetectorProps) {
             </div>
 
             <div className="flex-1 flex flex-col min-h-0 min-w-0 bg-background/30">
+              <div className="flex items-center gap-2 px-4 py-2 border-b border-border/50 bg-background/30 flex-shrink-0">
+                <span className="text-[11px] font-medium text-muted uppercase tracking-wider">Analysis</span>
+              </div>
               <div className="flex-1 p-4 overflow-y-auto flex flex-col">
                 {!result ? (
                   <div className="flex flex-col items-center justify-center flex-1 text-center px-6 py-12 max-w-sm mx-auto">
-                    <div className="w-16 h-16 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mb-5">
+                    <div className="w-16 h-16 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-5">
                       <ScanSearch size={28} className="text-primary" />
                     </div>
                     <h3 className="text-base font-semibold text-foreground mb-1.5">
@@ -512,17 +518,17 @@ export default function AiDetector({ id }: AiDetectorProps) {
                       {t("emptyStateHint")}
                     </p>
                     <div className="flex flex-wrap justify-center gap-2">
-                      <span className="inline-flex items-center rounded-full bg-surface border border-border px-3 py-1.5 text-xs text-muted">
+                      <span className="inline-flex items-center rounded-full bg-surface border border-border/60 px-3 py-1.5 text-xs text-muted">
                         {t("emptyStateTip1")}
                       </span>
-                      <span className="inline-flex items-center rounded-full bg-surface border border-border px-3 py-1.5 text-xs text-muted">
+                      <span className="inline-flex items-center rounded-full bg-surface border border-border/60 px-3 py-1.5 text-xs text-muted">
                         {t("emptyStateTip2")}
                       </span>
                     </div>
                   </div>
                 ) : (
                   <>
-                    <div className="mb-6 text-center">
+                    <div className="mb-6 text-center py-4 px-4 rounded-xl bg-background/50 border border-border/50">
                       <p className="text-4xl font-bold text-foreground tabular-nums">
                         {result.aiScore >= result.humanScore
                           ? result.aiScore
@@ -572,8 +578,8 @@ export default function AiDetector({ id }: AiDetectorProps) {
                       </ResponsiveContainer>
                     </div>
 
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between gap-2">
+                    <div className="space-y-2 rounded-xl border border-border/50 bg-background/30 p-3">
+                      <div className="flex items-center justify-between gap-2 py-1">
                         <span className="text-sm text-muted-foreground flex items-center gap-1.5">
                           {t("aiGenerated")}
                           <Info size={14} className="text-muted-foreground/70" />
@@ -585,7 +591,8 @@ export default function AiDetector({ id }: AiDetectorProps) {
                           </span>
                         </span>
                       </div>
-                      <div className="flex items-center justify-between gap-2">
+                      <div className="w-full h-px bg-border/50" />
+                      <div className="flex items-center justify-between gap-2 py-1">
                         <span className="text-sm text-muted-foreground flex items-center gap-1.5">
                           {t("humanWritten")}
                           <Info size={14} className="text-muted-foreground/70" />
@@ -616,8 +623,8 @@ export default function AiDetector({ id }: AiDetectorProps) {
                               <div
                                 key={`${s.text}-${idx}`}
                                 className={cn(
-                                  "rounded-lg border px-3 py-2 text-xs leading-relaxed cursor-pointer bg-surface border-border",
-                                  (isActive && "border-[0.5px] border-primary bg-primary/10 text-foreground!")
+                                  "rounded-xl border px-3 py-2 text-xs leading-relaxed cursor-pointer bg-surface border-border transition-all duration-150",
+                                  (isActive && "border-primary bg-primary/10 text-foreground! ring-1 ring-primary/20")
                                 )}
                                 onClick={() => {
                                   setActiveSentenceIndex(idx);

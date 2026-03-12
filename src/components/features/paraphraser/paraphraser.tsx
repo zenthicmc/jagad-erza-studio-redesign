@@ -494,7 +494,7 @@ export default function Paraphraser({ id }: ParaphraserProps) {
   return (
     <>
       <div className="flex flex-col h-[calc(100vh-var(--header-height))] overflow-hidden">
-        <div className="flex items-center justify-between gap-3 p-4 border-b border-border bg-surface/50 backdrop-blur-sm flex-shrink-0">
+        <div className="flex items-center justify-between gap-3 px-4 py-2.5 border-b border-border bg-surface/80 backdrop-blur-sm shadow-sm flex-shrink-0">
           <div className="flex items-center gap-3">
             {canGoBack && (
               <button
@@ -506,7 +506,7 @@ export default function Paraphraser({ id }: ParaphraserProps) {
               </button>
             )}
             {canGoBack && <div className="w-px h-5 bg-border" />}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 pl-1 border-l-2 border-primary">
               <Sparkles size={18} className="text-primary" />
               <h1 className="text-base font-semibold text-foreground">
                 {t("title")}
@@ -576,9 +576,9 @@ export default function Paraphraser({ id }: ParaphraserProps) {
           </div>
         </div>
 
-        <div className="flex-1 flex items-stretch justify-center min-h-0 overflow-hidden p-6">
-          <div className="w-full max-w-6xl border border-border rounded-lg bg-surface/50 shadow-sm flex flex-col min-h-0">
-            <div className="relative flex items-center gap-3 px-5 py-3 border-b border-border bg-background/50 overflow-visible">
+        <div className="flex-1 flex items-stretch justify-center min-h-0 overflow-hidden p-5">
+          <div className="w-full max-w-6xl border border-border/70 rounded-xl bg-surface/50 shadow-lg ring-1 ring-border/30 flex flex-col min-h-0">
+            <div className="relative flex items-center gap-3 px-5 py-3 border-b border-border bg-background/60 backdrop-blur-sm overflow-visible">
               <div className="w-48">
                 <Select
                   options={toneOptions}
@@ -650,6 +650,9 @@ export default function Paraphraser({ id }: ParaphraserProps) {
 
             <div className="flex flex-col lg:flex-row flex-1 min-h-0">
               <div className="flex-1 flex flex-col border-b lg:border-b-0 lg:border-r border-border min-h-0 overflow-hidden">
+                <div className="flex items-center gap-2 px-4 py-2 border-b border-border/50 bg-background/30">
+                  <span className="text-[11px] font-medium text-muted uppercase tracking-wider">Input</span>
+                </div>
                 <div className="flex-1 min-h-0 p-4 overflow-hidden">
                   {uploadedFileName && (
                     <span className="inline-flex items-center gap-2 text-sm text-foreground bg-background border border-primary/40 rounded-lg px-3 py-2 w-full">
@@ -742,6 +745,9 @@ export default function Paraphraser({ id }: ParaphraserProps) {
               </div>
 
               <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
+                <div className="flex items-center gap-2 px-4 py-2 border-b border-border/50 bg-background/30">
+                  <span className="text-[11px] font-medium text-muted uppercase tracking-wider">Output</span>
+                </div>
                 <div
                   ref={outputScrollRef}
                   className="flex-1 min-h-0 p-4 overflow-y-auto"
@@ -757,7 +763,7 @@ export default function Paraphraser({ id }: ParaphraserProps) {
                     </div>
                   ) : (
                     <div className="flex flex-col items-center justify-center h-full text-center">
-                      <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                      <div className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4">
                         <Sparkles size={24} className="text-primary" />
                       </div>
                       <h3 className="text-sm font-semibold text-foreground mb-1.5">
