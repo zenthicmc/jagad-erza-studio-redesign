@@ -48,6 +48,8 @@
   --surface-hover: #24243a;
   --border-color: #2a2a3e;
   --text-muted: #8888a0;
+  --bg-rgb: 15, 15, 20;
+  --border-rgb: 255, 255, 255;
   color-scheme: dark;
 }
 
@@ -61,6 +63,8 @@
   --surface-hover: #f0f0f8;
   --border-color: #e2e2ee;
   --text-muted: #6e6e88;
+  --bg-rgb: 248, 249, 252;
+  --border-rgb: 0, 0, 0;
   color-scheme: light;
 }
 

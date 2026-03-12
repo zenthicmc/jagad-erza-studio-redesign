@@ -13,22 +13,36 @@ export default function LandingHeader() {
   const tLanding = useTranslations("landing");
   const tAuth = useTranslations("auth");
 
-  const [scrolled, setScrolled] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrollY(window.scrollY);
     };
 
     handleScroll();
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Smooth 0→1 progress over first 80px of scroll
+  const progress = Math.min(scrollY / 80, 1);
+
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass shadow-sm shadow-primary/5' : 'bg-transparent py-2'}`}
-      style={!scrolled ? { background: 'linear-gradient(to bottom, var(--bg) 0%, transparent 100%)' } : undefined}
+    <header
+      className="fixed top-0 left-0 right-0 z-50"
+      style={{
+        // Background: fades from page bg → glass as user scrolls
+        background: `rgba(var(--bg-rgb, 15, 15, 20), ${0.6 + progress * 0.25})`,
+        backdropFilter: `blur(${progress * 14}px)`,
+        WebkitBackdropFilter: `blur(${progress * 14}px)`,
+        // Border bottom: fades in smoothly from transparent
+        borderBottom: `1px solid rgba(var(--border-rgb, 255, 255, 255), ${progress * 0.08})`,
+        // Box shadow: fades in smoothly
+        boxShadow: `0 1px 24px rgba(0,0,0,${progress * 0.15})`,
+        transition: "none", // We control everything via scrollY, no CSS transition needed
+      }}
     >
       <div className="max-w-7xl mx-auto px-6 h-[var(--header-height)] flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 no-underline">
