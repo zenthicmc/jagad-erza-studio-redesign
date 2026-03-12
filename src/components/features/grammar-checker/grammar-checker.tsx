@@ -695,7 +695,7 @@ export default function GrammarChecker({ id }: GrammarCheckerProps) {
 
             <div className="flex flex-col lg:flex-row flex-1 min-h-0">
               <div className="flex-1 flex flex-col border-b lg:border-b-0 lg:border-r border-border min-h-0 overflow-hidden">
-                <div className="flex items-center justify-between px-4 py-2.5 border-b border-border" style={{background: 'var(--bg)'}}>
+                <div className="flex items-center justify-between px-4 h-10 border-b border-border" style={{background: 'var(--bg)'}}>
                   <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
                     <span className="text-xs font-semibold text-foreground">Input</span>
@@ -882,7 +882,7 @@ export default function GrammarChecker({ id }: GrammarCheckerProps) {
               <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
                 {activeSuggestions.length > 0 ? (
                   <>
-                    <div className="flex items-center justify-between px-4 py-2.5 border-b border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
+                    <div className="flex items-center justify-between px-4 h-10 border-b border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
                       <div className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
                         <span className="text-xs font-semibold text-foreground">Suggestions</span>

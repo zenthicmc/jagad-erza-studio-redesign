@@ -381,7 +381,7 @@ export default function AiDetector({ id }: AiDetectorProps) {
         <div className="flex-1 flex items-stretch min-h-0 p-4">
           <div className="w-full max-w-6xl mx-auto border border-border rounded-xl overflow-hidden flex flex-col lg:flex-row min-h-[500px] shadow-xl" style={{background: 'var(--surface)'}}>
             <div className="flex-[2] flex flex-col border-b lg:border-b-0 lg:border-r border-border min-h-0 min-w-0">
-              <div className="flex items-center justify-between px-4 py-2.5 border-b border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
+              <div className="flex items-center justify-between px-4 h-10 border-b border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary" />
                   <span className="text-xs font-semibold text-foreground">Input</span>
@@ -510,7 +510,7 @@ export default function AiDetector({ id }: AiDetectorProps) {
             </div>
 
             <div className="flex-1 flex flex-col min-h-0 min-w-0">
-              <div className="flex items-center justify-between px-4 py-2.5 border-b border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
+              <div className="flex items-center justify-between px-4 h-10 border-b border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-muted" />
                   <span className="text-xs font-semibold text-foreground">Analysis</span>
