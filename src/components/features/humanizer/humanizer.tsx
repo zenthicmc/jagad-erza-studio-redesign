@@ -10,6 +10,7 @@ import {
   Upload,
   Trash2,
   Copy,
+  Check,
   Download,
   FolderPlus,
   RefreshCw,
@@ -90,6 +91,18 @@ export default function Humanizer({ id }: HumanizerProps) {
     if (!text) return 0;
     return text.split(/\s+/).length;
   }, [outputText]);
+
+  const [isCopied, setIsCopied] = useState(false);
+  const handleCopyOutput = useCallback(async () => {
+    if (!outputText) return;
+    try {
+      await navigator.clipboard.writeText(outputText);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch {
+      toast.error(t("copyError"));
+    }
+  }, [outputText, t]);
 
   useEffect(() => {
     if (!isProcessing) return;
@@ -747,11 +760,20 @@ export default function Humanizer({ id }: HumanizerProps) {
                 </div>
 
                 {outputText && (
-                  <div className="flex items-center justify-end px-4 h-14 border-t border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
+                  <div className="flex items-center justify-end gap-2 px-4 h-14 border-t border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
                     <span className="inline-flex items-center gap-1.5 rounded-full border border-border px-2.5 py-1 text-[11px] text-muted">
                       <span className="uppercase tracking-wide text-[10px] font-medium">{t("wordCount")}</span>
                       <span className="font-bold text-foreground text-[11px]">{outputWordCount}</span>
                     </span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      icon={isCopied ? <Check size={14} className="text-primary" /> : <Copy size={14} />}
+                      onClick={handleCopyOutput}
+                      className={`gap-1.5 text-xs transition-colors ${isCopied ? 'text-primary' : ''}`}
+                    >
+                      {isCopied ? t("copied") : t("copy")}
+                    </Button>
                   </div>
                 )}
               </div>

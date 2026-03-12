@@ -10,6 +10,7 @@ import {
   Upload,
   Trash2,
   Copy,
+  Check,
   Download,
   FolderPlus,
   RefreshCw,
@@ -88,6 +89,18 @@ export default function Paraphraser({ id }: ParaphraserProps) {
     if (!text) return 0;
     return text.split(/\s+/).length;
   }, [outputText]);
+
+  const [isCopied, setIsCopied] = useState(false);
+  const handleCopyOutput = useCallback(async () => {
+    if (!outputText) return;
+    try {
+      await navigator.clipboard.writeText(outputText);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch {
+      toast.error(t("copyError"));
+    }
+  }, [outputText, t]);
 
   useEffect(() => {
     if (!isProcessing) return;
@@ -804,14 +817,25 @@ export default function Paraphraser({ id }: ParaphraserProps) {
                         {t("structureChange")}
                       </span>
                     </div>
-                    <span className="inline-flex items-center gap-1 rounded-full border border-border bg-background/70 px-2 py-1 text-[11px] text-muted-foreground">
-                      <span className="uppercase tracking-wide text-[10px]">
-                        {t("wordCount")}
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex items-center gap-1 rounded-full border border-border bg-background/70 px-2 py-1 text-[11px] text-muted-foreground">
+                        <span className="uppercase tracking-wide text-[10px]">
+                          {t("wordCount")}
+                        </span>
+                        <span className="font-semibold text-foreground text-[10px]">
+                          {outputWordCount}
+                        </span>
                       </span>
-                      <span className="font-semibold text-foreground text-[10px]">
-                        {outputWordCount}
-                      </span>
-                    </span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        icon={isCopied ? <Check size={14} className="text-primary" /> : <Copy size={14} />}
+                        onClick={handleCopyOutput}
+                        className={`gap-1.5 text-xs transition-colors ${isCopied ? 'text-primary' : ''}`}
+                      >
+                        {isCopied ? t("copied") : t("copy")}
+                      </Button>
+                    </div>
                   </div>
                 )}
               </div>
