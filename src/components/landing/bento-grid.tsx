@@ -2,49 +2,71 @@
 
 import {
   Sparkles,
-  Globe,
   FileText,
   MessageSquare,
-  ImageIcon
+  Wand2,
+  Repeat2,
+  SpellCheck,
+  ScanSearch,
+  FolderOpen,
+  PenLine,
+  ArrowRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 export default function BentoGrid() {
   const t = useTranslations("landing.bento");
 
   const features = [
     {
-      title: t("aiWriting"),
-      description: t("aiWritingDesc"),
-      icon: <FileText size={24} className="text-primary" />,
-      colSpan: "md:col-span-2",
-      rowSpan: "md:row-span-1",
-      glow: "bg-primary/5",
+      title: "Writing Assistant",
+      description: "Generate high-quality articles, blog posts, and marketing copy in seconds with AI-powered writing.",
+      icon: <PenLine size={22} className="text-primary" />,
+      href: "/signup",
     },
     {
-      title: t("smartChat"),
-      description: t("smartChatDesc"),
-      icon: <MessageSquare size={24} className="text-secondary" />,
-      colSpan: "md:col-span-1",
-      rowSpan: "md:row-span-2",
-      glow: "bg-secondary/5",
+      title: "Article Manager",
+      description: "Organize, edit, and publish your articles seamlessly in one centralized workspace.",
+      icon: <FileText size={22} className="text-primary" />,
+      href: "/signup",
     },
     {
-      title: t("imageGen"),
-      description: t("imageGenDesc"),
-      icon: <ImageIcon size={24} className="text-accent" />,
-      colSpan: "md:col-span-2",
-      rowSpan: "md:row-span-1",
-      glow: "bg-accent/5",
+      title: "AI Chat",
+      description: "Chat with an advanced AI assistant that understands context and helps you brainstorm ideas.",
+      icon: <MessageSquare size={22} className="text-primary" />,
+      href: "/signup",
     },
     {
-      title: t("multilingual"),
-      description: t("multilingualDesc"),
-      icon: <Globe size={24} className="text-secondary-dark" />,
-      colSpan: "md:col-span-3",
-      rowSpan: "md:row-span-1",
-      glow: "bg-secondary-dark/5",
+      title: "Humanizer",
+      description: "Transform AI-generated text into natural, human-sounding content that bypasses AI detectors.",
+      icon: <Wand2 size={22} className="text-primary" />,
+      href: "/signup",
+    },
+    {
+      title: "Paraphraser",
+      description: "Rewrite and rephrase any text while preserving the original meaning with multiple tone options.",
+      icon: <Repeat2 size={22} className="text-primary" />,
+      href: "/signup",
+    },
+    {
+      title: "Grammar Checker",
+      description: "Detect and fix grammar, spelling, and punctuation errors instantly with AI precision.",
+      icon: <SpellCheck size={22} className="text-primary" />,
+      href: "/signup",
+    },
+    {
+      title: "AI Detector",
+      description: "Analyze any text and determine the probability of it being AI-generated or human-written.",
+      icon: <ScanSearch size={22} className="text-primary" />,
+      href: "/signup",
+    },
+    {
+      title: "Collection",
+      description: "Save, organize, and manage all your generated content in smart folders for easy access.",
+      icon: <FolderOpen size={22} className="text-primary" />,
+      href: "/signup",
     },
   ];
 
@@ -52,70 +74,94 @@ export default function BentoGrid() {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
+      transition: { staggerChildren: 0.08 },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const } },
+    hidden: { opacity: 0, y: 24 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const } },
   };
 
   return (
-    <section id="features" className="py-24 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="features" className="py-28 relative overflow-hidden">
+      {/* Subtle background glow */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-primary/4 rounded-full blur-[180px]" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-            Everything you need in <span className="text-gradient">one studio.</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-6">
+            <Sparkles size={13} className="text-primary" />
+            <span>All-in-One Toolkit</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-5">
+            Everything you need,{" "}
+            <span className="text-gradient-primary">in one place.</span>
           </h2>
-          <p className="text-lg text-muted max-w-2xl mx-auto">
-            Powerful tools integrated into a seamless experience. Stop switching between 10 different apps.
+          <p className="text-lg text-muted max-w-2xl mx-auto leading-relaxed">
+            Eight powerful AI tools integrated into a seamless experience. Stop switching between apps — everything lives here.
           </p>
         </motion.div>
 
+        {/* Features Grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
         >
           {features.map((feature) => (
             <motion.div
               variants={itemVariants}
               key={feature.title}
-              className={`group relative flex flex-col justify-between p-8 rounded-3xl border border-border/50 bg-surface/30 backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(177,243,21,0.05)] hover:-translate-y-1 ${feature.colSpan} ${feature.rowSpan}`}
+              className="group relative flex flex-col p-6 rounded-2xl border border-border/60 bg-surface/40 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:border-primary/40 hover:bg-surface/70 hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(145,203,10,0.06)]"
             >
-              <div className={`absolute inset-0 ${feature.glow} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+              {/* Hover glow */}
+              <div className="absolute inset-0 bg-primary/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
 
-              <div className="relative z-10 flex flex-col h-full">
-                <div className="w-12 h-12 rounded-2xl bg-surface border border-border/50 flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300">
+              <div className="relative z-10">
+                {/* Icon */}
+                <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:bg-primary/15 transition-colors duration-300">
                   {feature.icon}
                 </div>
 
-                <div className="mt-auto">
-                  <h3 className="text-xl font-semibold mb-2 text-fg group-hover:text-primary transition-colors">
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
-
-              <div className="absolute top-0 right-0 p-6 opacity-0 translate-x-4 -translate-y-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500">
-                <Sparkles size={20} className="text-primary/30" />
+                {/* Text */}
+                <h3 className="text-sm font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-200">
+                  {feature.title}
+                </h3>
+                <p className="text-xs text-muted leading-relaxed">
+                  {feature.description}
+                </p>
               </div>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* Bottom CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-12 text-center"
+        >
+          <Link
+            href="/signup"
+            className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary-light transition-colors no-underline group"
+          >
+            Explore all features
+            <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+          </Link>
         </motion.div>
       </div>
     </section>
