@@ -47,6 +47,7 @@ interface Message {
 
 interface AISuggestion {
   suggestedText: string;
+  originalText?: string;
   range: { from: number; to: number } | null;
   cursorPosition?: number;
 }
@@ -172,6 +173,8 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
   const [aiSuggestion, setAiSuggestion] = useState<AISuggestion | null>(null);
   const [showSuggestionPopup, setShowSuggestionPopup] = useState(false);
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+  // Store selection DOMRect to anchor popup below selected text
+  const selectionRectRef = useRef<DOMRect | null>(null);
 
   // Editor reference
   const editorRef = useRef<EditorRef | null>(null);
@@ -505,7 +508,7 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
 
   // Handle text selection - stores selection but doesn't add to chat yet
   const handleTextSelection = useCallback(
-    (selectedText: string, range: { from: number; to: number }) => {
+    (selectedText: string, range: { from: number; to: number }, rect: DOMRect) => {
       if (!selectedText.trim()) {
         return;
       }
@@ -513,6 +516,8 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
       const selectionData = { text: selectedText, range };
       setSelectedTextInfo(selectionData);
       selectionRef.current = selectionData;
+      // Store the bounding rect so we can anchor the popup below the selection
+      selectionRectRef.current = rect;
       setHasSelectionInChat(true);
       setInputMessage("");
     },
@@ -657,15 +662,41 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
 
                   setAiSuggestion({
                     suggestedText: parsedContent,
+                    originalText: capturedSelection?.text || undefined,
                     range: replaceRange,
                     cursorPosition: replaceRange ? undefined : capturedCursorPosition,
                   });
 
-                  // Show popup in editor
-                  setPopupPosition({
-                    top: 200,
-                    left: typeof window !== "undefined" ? window.innerWidth / 2 - 160 : 0,
-                  });
+                  // Show popup anchored below the selected text
+                  // If we have a selection rect, position below it; otherwise fall back to center
+                  if (selectionRectRef.current && typeof window !== "undefined") {
+                    const rect = selectionRectRef.current;
+                    const popupWidth = 320; // w-80 = 320px
+                    const popupHeight = 260; // estimated popup height
+                    const margin = 10;
+
+                    // Horizontal: center popup on selection, clamp to viewport
+                    let left = rect.left + rect.width / 2 - popupWidth / 2;
+                    if (left + popupWidth > window.innerWidth - margin) {
+                      left = window.innerWidth - popupWidth - margin;
+                    }
+                    if (left < margin) left = margin;
+
+                    // Vertical: below selection by default; flip above if near bottom
+                    let top = rect.bottom + 12;
+                    if (top + popupHeight > window.innerHeight - margin) {
+                      top = rect.top - popupHeight - 12;
+                    }
+                    if (top < margin) top = margin;
+
+                    setPopupPosition({ top, left });
+                  } else {
+                    // Fallback: center of screen
+                    setPopupPosition({
+                      top: 200,
+                      left: typeof window !== "undefined" ? window.innerWidth / 2 - 160 : 0,
+                    });
+                  }
                   setShowSuggestionPopup(true);
                 }
 
@@ -935,33 +966,75 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
 
             {showSuggestionPopup && aiSuggestion && (
               <div
-                className="fixed z-50 w-80 bg-surface border border-border rounded-lg shadow-2xl overflow-hidden max-h-[80vh] flex flex-col"
+                className="fixed z-50 w-[340px] bg-surface border border-border rounded-xl shadow-2xl overflow-hidden max-h-[70vh] flex flex-col"
                 style={{ top: popupPosition.top, left: popupPosition.left }}
               >
-                <div className="flex items-center gap-2 px-4 py-3 bg-primary/5 border-b border-border flex-shrink-0">
-                  <Sparkles size={16} className="text-primary" />
-                  <span className="text-sm font-semibold text-foreground">{t("aiSuggestion")}</span>
+                {/* Arrow pointing up toward selected text */}
+                <div
+                  className="absolute -top-[7px] left-1/2 -translate-x-1/2 w-3 h-3 bg-surface border-l border-t border-border rotate-45"
+                />
+                {/* Header */}
+                <div className="flex items-center justify-between gap-2 px-3 py-2 bg-primary/5 border-b border-border flex-shrink-0">
+                  <div className="flex items-center gap-2">
+                    <Sparkles size={13} className="text-primary" />
+                    <span className="text-xs font-semibold text-foreground">{t("aiSuggestion")}</span>
+                  </div>
+                  <button
+                    onClick={handleCancelSuggestion}
+                    className="p-1 rounded-md text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
+                  >
+                    <X size={12} />
+                  </button>
                 </div>
-                <div className="p-4 flex-1 flex flex-col overflow-hidden">
-                  <div className="mb-4 overflow-y-auto max-h-[40vh]">
+
+                <div className="flex-1 overflow-y-auto">
+                  {/* Original text (if replacing selection) */}
+                  {aiSuggestion.originalText && (
+                    <div className="px-3 pt-3 pb-2">
+                      <p className="text-[10px] uppercase tracking-wider font-semibold text-muted mb-1.5">Original</p>
+                      <p className="text-xs text-muted bg-background px-2.5 py-2 rounded-lg border border-border/60 leading-relaxed line-clamp-3">
+                        {aiSuggestion.originalText}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Divider arrow */}
+                  {aiSuggestion.originalText && (
+                    <div className="flex items-center justify-center py-1">
+                      <div className="w-px h-3 bg-border" />
+                    </div>
+                  )}
+
+                  {/* Suggested text */}
+                  <div className={`px-3 ${aiSuggestion.originalText ? "pb-3" : "py-3"}`}>
+                    {aiSuggestion.originalText && (
+                      <p className="text-[10px] uppercase tracking-wider font-semibold text-primary mb-1.5">Suggestion</p>
+                    )}
                     <div
-                      className="text-sm text-foreground bg-green-50 dark:bg-green-950/20 px-3 py-2.5 rounded-lg border-l-2 border-green-500 leading-relaxed markdown-render-area"
+                      className="text-xs text-foreground bg-primary/5 px-2.5 py-2 rounded-lg border border-primary/20 leading-relaxed markdown-render-area max-h-[180px] overflow-y-auto"
                       dangerouslySetInnerHTML={{ __html: aiSuggestion.suggestedText }}
                     />
                   </div>
-                  <div className="flex items-center justify-end gap-2 flex-shrink-0 mt-auto">
+                </div>
+
+                {/* Footer actions */}
+                <div className="flex items-center justify-between gap-2 px-3 py-2 border-t border-border bg-background/50 flex-shrink-0">
+                  <span className="text-[10px] text-muted">
+                    {aiSuggestion.originalText ? "Replace selection" : "Insert at cursor"}
+                  </span>
+                  <div className="flex items-center gap-1.5">
                     <button
                       onClick={handleCancelSuggestion}
-                      className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-muted hover:text-foreground bg-surface-hover rounded-lg transition-colors"
+                      className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-muted hover:text-foreground bg-surface-hover rounded-lg transition-colors"
                     >
-                      <X size={14} />
+                      <X size={12} />
                       {t("cancel")}
                     </button>
                     <button
                       onClick={handleApplySuggestion}
-                      className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors"
+                      className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors"
                     >
-                      <RefreshCw size={14} />
+                      <Check size={12} />
                       {t("apply")}
                     </button>
                   </div>
