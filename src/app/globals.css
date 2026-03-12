@@ -167,12 +167,12 @@ body {
 @layer components {
   /* TipTap Highlight extension - AI suggestion highlight */
 .markdown-render-area mark,
-.selectable mark {
-  background-color: var(--primary);
-  color: var(--bg);
+.selectable mark,
+.ProseMirror mark {
+  background-color: color-mix(in srgb, var(--primary) 35%, transparent);
+  color: inherit;
   border-radius: 2px;
-  padding: 0 1px;
-  opacity: 0.4;
+  padding: 0 2px;
 }
 
 .markdown-render-area {

@@ -974,6 +974,93 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
               />
             )}
 
+            {/* AI Suggestion Popup - fixed, anchored below selected text */}
+            {showSuggestionPopup && aiSuggestion && (
+              <div
+                className="fixed z-50 bg-surface border border-border rounded-xl shadow-2xl overflow-hidden flex flex-col"
+                style={{
+                  top: popupPosition.top,
+                  left: popupPosition.left,
+                  width: 360,
+                  maxHeight: 420,
+                }}
+              >
+                {/* Arrow pointing up toward selected text */}
+                <div className="absolute -top-[6px] left-6 w-3 h-3 bg-surface border-l border-t border-border rotate-45" />
+
+                {/* Header */}
+                <div className="flex items-center justify-between px-3.5 py-2.5 bg-primary/8 border-b border-border flex-shrink-0">
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-5 rounded-md bg-primary/20 flex items-center justify-center">
+                      <Sparkles size={11} className="text-primary" />
+                    </div>
+                    <span className="text-xs font-semibold text-foreground">{t("aiSuggestion")}</span>
+                  </div>
+                  <button
+                    onClick={handleCancelSuggestion}
+                    className="p-1 rounded-md text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
+                  >
+                    <X size={12} />
+                  </button>
+                </div>
+
+                {/* Body */}
+                <div className="flex-1 overflow-y-auto">
+                  {/* Original text */}
+                  {aiSuggestion.originalText && (
+                    <div className="px-3.5 pt-3 pb-2">
+                      <p className="text-[10px] uppercase tracking-wider font-semibold text-muted mb-1.5">Original</p>
+                      <p className="text-xs text-muted bg-background px-2.5 py-2 rounded-lg border border-border/60 leading-relaxed line-clamp-3">
+                        {aiSuggestion.originalText}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Connector */}
+                  {aiSuggestion.originalText && (
+                    <div className="flex items-center gap-2 px-3.5 py-1">
+                      <div className="flex-1 h-px bg-border/60" />
+                      <span className="text-[10px] text-muted">↓</span>
+                      <div className="flex-1 h-px bg-border/60" />
+                    </div>
+                  )}
+
+                  {/* Suggested text */}
+                  <div className={`px-3.5 ${aiSuggestion.originalText ? "pb-3" : "py-3"}`}>
+                    {aiSuggestion.originalText && (
+                      <p className="text-[10px] uppercase tracking-wider font-semibold text-primary mb-1.5">Suggestion</p>
+                    )}
+                    <div
+                      className="text-xs text-foreground bg-primary/5 px-2.5 py-2 rounded-lg border border-primary/20 leading-relaxed markdown-render-area max-h-[160px] overflow-y-auto"
+                      dangerouslySetInnerHTML={{ __html: aiSuggestion.suggestedText }}
+                    />
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="flex items-center justify-between gap-2 px-3.5 py-2.5 border-t border-border bg-background/60 flex-shrink-0">
+                  <span className="text-[10px] text-muted">
+                    {aiSuggestion.originalText ? t("replaceSelection") : t("insertAtCursor")}
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      onClick={handleCancelSuggestion}
+                      className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-muted hover:text-foreground bg-surface-hover rounded-lg transition-colors"
+                    >
+                      <X size={12} />
+                      {t("cancel")}
+                    </button>
+                    <button
+                      onClick={handleApplySuggestion}
+                      className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors"
+                    >
+                      <Check size={12} />
+                      {t("apply")}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
 
           </div>
         </main>
@@ -1101,81 +1188,7 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
             <div ref={messagesEndRef} />
           </div>
 
-          {/* AI Suggestion Panel - appears in sidebar when suggestion is ready */}
-          {showSuggestionPopup && aiSuggestion && (
-            <div className="border-t border-primary/30 bg-primary/5 flex-shrink-0">
-              {/* Header */}
-              <div className="flex items-center justify-between px-4 py-2.5 border-b border-primary/20">
-                <div className="flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-md bg-primary/20 flex items-center justify-center">
-                    <Sparkles size={11} className="text-primary" />
-                  </div>
-                  <span className="text-xs font-semibold text-primary">{t("aiSuggestion")}</span>
-                </div>
-                <button
-                  onClick={handleCancelSuggestion}
-                  className="p-1 rounded-md text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
-                >
-                  <X size={12} />
-                </button>
-              </div>
 
-              <div className="px-4 py-3 space-y-3 max-h-[280px] overflow-y-auto">
-                {/* Original text */}
-                {aiSuggestion.originalText && (
-                  <div>
-                    <p className="text-[10px] uppercase tracking-wider font-semibold text-muted mb-1.5">Original</p>
-                    <p className="text-xs text-muted bg-background px-3 py-2 rounded-lg border border-border/60 leading-relaxed line-clamp-3">
-                      {aiSuggestion.originalText}
-                    </p>
-                  </div>
-                )}
-
-                {/* Connector */}
-                {aiSuggestion.originalText && (
-                  <div className="flex items-center gap-2">
-                    <div className="flex-1 h-px bg-border/60" />
-                    <span className="text-[10px] text-muted px-1">↓</span>
-                    <div className="flex-1 h-px bg-border/60" />
-                  </div>
-                )}
-
-                {/* Suggested text */}
-                <div>
-                  {aiSuggestion.originalText && (
-                    <p className="text-[10px] uppercase tracking-wider font-semibold text-primary mb-1.5">Suggestion</p>
-                  )}
-                  <div
-                    className="text-xs text-foreground bg-background px-3 py-2 rounded-lg border border-primary/25 leading-relaxed markdown-render-area"
-                    dangerouslySetInnerHTML={{ __html: aiSuggestion.suggestedText }}
-                  />
-                </div>
-              </div>
-
-              {/* Actions */}
-              <div className="flex items-center justify-between px-4 py-2.5 border-t border-primary/20">
-                <span className="text-[10px] text-muted">
-                  {aiSuggestion.originalText ? t("replaceSelection") : t("insertAtCursor")}
-                </span>
-                <div className="flex items-center gap-1.5">
-                  <button
-                    onClick={handleCancelSuggestion}
-                    className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-muted hover:text-foreground bg-surface-hover rounded-lg transition-colors"
-                  >
-                    <X size={12} />
-                    {t("cancel")}
-                  </button>
-                  <button
-                    onClick={handleApplySuggestion}
-                    className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors"
-                  >
-                    <Check size={12} />
-                    {t("apply")}
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
 
           <div className="p-3 border-t border-border bg-background/60">
             <div className="space-y-2">
