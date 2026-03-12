@@ -1,0 +1,17 @@
+#!/bin/sh
+
+if command -v bun >/dev/null 2>&1; then
+  NODE_ENGINE="bun"
+elif command -v pnpm >/dev/null 2>&1; then
+  NODE_ENGINE="pnpm"
+elif command -v npm >/dev/null 2>&1; then
+  NODE_ENGINE="npm"
+else
+  echo "Error: No package manager found (bun, pnpm, or npm)"
+  exit 1
+fi
+
+echo "$NODE_ENGINE run lint"
+$NODE_ENGINE run lint
+
+exit $?

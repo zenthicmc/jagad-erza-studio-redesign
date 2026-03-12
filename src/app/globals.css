@@ -1,0 +1,691 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ========================================
+   Design Tokens
+   ======================================== */
+
+@theme inline {
+  /* Brand Colors - Slime Lime palette */
+  --color-primary: #91CB0A;
+  --color-primary-light: #c7f94a;
+  --color-primary-dark: #91CB0A;
+
+  --color-secondary: #91CB0A;
+  --color-secondary-light: #B1F315;
+  --color-secondary-dark: #7FB000;
+
+  --color-accent: #91CB0A;
+  --color-accent-light: #B1F315;
+  --color-accent-dark: #7FB000;
+
+  /* Neutral Colors */
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border-color);
+  --color-muted: var(--text-muted);
+
+  /* Font */
+  --font-sans: var(--font-manrope), system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* Sidebar */
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 72px;
+  --header-height: 64px;
+}
+
+/* ========================================
+   Dark Theme (default)
+   ======================================== */
+:root,
+[data-theme="dark"] {
+  --bg: #0f0f14;
+  --fg: #e8e8ed;
+  --surface: #1a1a24;
+  --surface-hover: #24243a;
+  --border-color: #2a2a3e;
+  --text-muted: #8888a0;
+  color-scheme: dark;
+}
+
+/* ========================================
+   Light Theme
+   ======================================== */
+[data-theme="light"] {
+  --bg: #f8f9fc;
+  --fg: #1a1a2e;
+  --surface: #ffffff;
+  --surface-hover: #f0f0f8;
+  --border-color: #e2e2ee;
+  --text-muted: #6e6e88;
+  color-scheme: light;
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+* {
+  box-sizing: border-box;
+  /* -webikit-tap-highlight-color: transparent; */
+}
+
+/* Hide number input spinners */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ========================================
+   Autofill Overrides
+   ======================================== */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--surface) inset !important;
+  -webkit-text-fill-color: var(--fg) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  min-height: 100dvh;
+}
+
+/* ========================================
+   Scrollbar
+   ======================================== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ========================================
+   Focus Styles
+   ======================================== */
+:focus-visible {
+  outline: 1px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+/* ========================================
+   Transitions
+   ======================================== */
+.transition-sidebar {
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================
+   Glass Effect
+   ======================================== */
+.glass {
+  background: rgba(26, 26, 36, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* ========================================
+   Markdown Rendering
+   Inside @layer components to override Tw4 preflight
+   ======================================== */
+@layer components {
+  .markdown-render-area {
+    width: 100%;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    color: var(--fg);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .markdown-render-area h1 {
+    font-size: 28px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .markdown-render-area h2 {
+    font-size: 24px;
+    margin-top: 18px;
+    margin-bottom: 12px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .markdown-render-area h3 {
+    font-size: 20px;
+    margin-top: 16px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .markdown-render-area h4 {
+    font-size: 18px;
+    margin-top: 14px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .markdown-render-area h5 {
+    font-size: 16px;
+    margin-top: 12px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .markdown-render-area h6 {
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .markdown-render-area h1:first-child,
+  .markdown-render-area h2:first-child,
+  .markdown-render-area h3:first-child,
+  .markdown-render-area h4:first-child,
+  .markdown-render-area h5:first-child,
+  .markdown-render-area h6:first-child {
+    margin-top: 0;
+  }
+
+  .markdown-render-area p {
+    font-size: 15px;
+    line-height: 1.7;
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: inherit;
+  }
+
+  .markdown-render-area p:last-child {
+    margin-bottom: 0;
+  }
+
+  .markdown-render-area ul,
+  .markdown-render-area ol {
+    margin-top: 0;
+    margin-bottom: 12px;
+    padding-left: 24px;
+  }
+
+  .markdown-render-area ul {
+    list-style-type: disc;
+  }
+
+  .markdown-render-area ol {
+    list-style-type: decimal;
+  }
+
+  .markdown-render-area ul li,
+  .markdown-render-area ol li {
+    margin-bottom: 4px;
+    display: list-item;
+  }
+
+  .markdown-render-area ul ul {
+    list-style-type: circle;
+    margin-bottom: 0;
+  }
+
+  .markdown-render-area ul ul ul {
+    list-style-type: square;
+  }
+
+  .markdown-render-area strong {
+    font-weight: 700;
+  }
+
+  .markdown-render-area em {
+    font-style: italic;
+  }
+
+  .markdown-render-area a {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  .markdown-render-area code:not(pre code) {
+    background-color: var(--surface);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    word-break: break-word;
+    white-space: normal;
+    border: 1px solid var(--border-color);
+    color: var(--color-primary);
+  }
+
+  .markdown-render-area pre {
+    background-color: var(--bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 0;
+    margin-bottom: 12px;
+    overflow-x: auto;
+  }
+
+  .markdown-render-area pre code {
+    background: none;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--fg);
+  }
+
+  .markdown-render-area table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 14px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .markdown-render-area th,
+  .markdown-render-area td {
+    border: 1px solid var(--border-color);
+    padding: 10px 15px;
+    text-align: left;
+    min-width: 120px;
+  }
+
+  .markdown-render-area th {
+    font-weight: 700;
+    white-space: nowrap;
+    background-color: var(--surface);
+  }
+
+  .markdown-render-area blockquote {
+    border-left: 3px solid var(--color-primary);
+    padding-left: 16px;
+    margin: 12px 0;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .markdown-render-area hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 16px 0;
+  }
+
+  /* Image with source attribution */
+  .markdown-render-area img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 16px auto;
+    border-radius: 8px;
+  }
+
+  .markdown-render-area figure.image-with-source {
+    margin: 20px 0;
+    display: block;
+    page-break-inside: avoid;
+  }
+
+  .markdown-render-area figure.image-with-source img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+  }
+
+  .markdown-render-area figure.image-with-source figcaption {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin: 4px 0 0 0;
+    padding: 0;
+    user-select: none;
+    /* text-align will be set via inline style from extension */
+  }
+
+  .markdown-render-area figure.image-with-source figcaption a,
+  .markdown-render-area figure.image-with-source figcaption a.source-link {
+    color: var(--color-primary) !important;
+    text-decoration: none;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  .markdown-render-area figure.image-with-source figcaption a:hover,
+  .markdown-render-area figure.image-with-source figcaption a.source-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Make figure selectable in editor */
+  .ProseMirror figure.image-with-source {
+    cursor: default;
+  }
+
+  .ProseMirror figure.image-with-source.ProseMirror-selectednode,
+  .ProseMirror .custom-image-node-view figure.selected {
+    outline: none;
+  }
+
+  /* Remove outline from editor */
+  .ProseMirror,
+  .ProseMirror:focus,
+  .ProseMirror-focused {
+    outline: none !important;
+    border: none;
+  }
+
+  /* Custom image node view */
+  .custom-image-node-view {
+    margin: 20px 0;
+    display: block;
+  }
+
+  .custom-image-node-view figure.image-with-source {
+    margin: 0;
+    position: relative;
+    display: block;
+  }
+
+  /* Table styles for ProseMirror editor */
+  .ProseMirror table,
+  .ProseMirror table.full-width-table {
+    border-collapse: collapse;
+    table-layout: auto;
+    width: 100%;
+    margin: 15px 0;
+    overflow: visible;
+    position: relative;
+  }
+
+  .ProseMirror td,
+  .ProseMirror th {
+    min-width: 100px;
+    border: 1px solid var(--border-color);
+    padding: 10px 15px;
+    vertical-align: top;
+    box-sizing: border-box;
+    position: relative;
+    word-wrap: break-word;
+  }
+
+  .ProseMirror th {
+    font-weight: 700;
+    text-align: left;
+    background-color: var(--surface-hover);
+  }
+
+  .ProseMirror .selectedCell:after {
+    z-index: 2;
+    position: absolute;
+    content: "";
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(107, 143, 94, 0.1);
+    pointer-events: none;
+  }
+
+  .ProseMirror .column-resize-handle {
+    position: absolute;
+    right: -2px;
+    top: 0;
+    bottom: -2px;
+    width: 4px;
+    background-color: var(--color-primary);
+    pointer-events: none;
+  }
+
+  .ProseMirror .tableWrapper {
+    overflow-x: auto;
+    margin: 15px 0;
+    position: relative;
+  }
+
+  .ProseMirror.resize-cursor {
+    cursor: ew-resize;
+    cursor: col-resize;
+  }
+
+
+  /* Print styles for PDF export */
+  @media print {
+    .markdown-render-area figure.image-with-source {
+      page-break-inside: avoid;
+      margin: 20px 0;
+      display: block;
+    }
+
+    .markdown-render-area figure.image-with-source img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      margin: 0;
+      display: block;
+    }
+
+    .markdown-render-area figure.image-with-source figcaption {
+      page-break-before: avoid;
+      font-size: 11px;
+      color: #6b7280;
+      font-style: italic;
+      margin: 4px 0 0 0;
+      padding: 0;
+      /* text-align preserved from inline style */
+    }
+
+    .markdown-render-area figure.image-with-source figcaption a,
+    .markdown-render-area figure.image-with-source figcaption a.source-link {
+      color: #3b82f6 !important;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
+
+/* ========================================
+   Custom Animations
+   ======================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes borderRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Base utility classes for landing page animations */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: fadeInSlide 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-scale {
+  animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
+}
+
+/* Premium gradient texts */
+.text-gradient {
+  background: linear-gradient(135deg, var(--fg) 30%, var(--text-muted));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-primary {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========================================
+   Notification Progress Bar Shimmer
+   ======================================== */
+@keyframes progressShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.notification-progress-shimmer {
+  background-image: linear-gradient(90deg,
+      var(--color-primary) 0%,
+      var(--color-primary-light) 50%,
+      var(--color-primary) 100%);
+  background-size: 200% 100%;
+  animation: progressShimmer 1.5s ease-in-out infinite;
+}
+
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: var(--color-border);
+  border-radius: 9999px;
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-primary, #fff);
+  cursor: pointer;
+  transition: box-shadow 0.15s;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 4px oklch(from var(--color-primary) l c h / 0.15);
+}
+
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-surface, #fff);
+  border: 2px solid var(--color-foreground);
+  cursor: pointer;
+}
+
+.slider::-moz-range-track {
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 9999px;
+}

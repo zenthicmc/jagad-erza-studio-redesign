@@ -1,0 +1,11 @@
+services:
+  app:
+    image: ghcr.io/erza-ai/erza-studio-redesign:dev-${GIT_SHA:-latest}
+    container_name: erza-studio-redesign
+    environment:
+      GIT_SHA: ${GIT_SHA:-latest}
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+      NODE_ENV: ${NODE_ENV:-production}
+    ports:
+      - "${PORT:-3000}:3000"
+    restart: unless-stopped
