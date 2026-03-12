@@ -557,10 +557,15 @@ export function CollectionPage() {
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-8 rounded-full bg-primary flex-shrink-0" />
-            <h1 className="text-2xl font-bold text-foreground">
-              {t("collection")}
-            </h1>
+            <div className="w-10 h-10 rounded-xl bg-primary/15 border border-primary/25 flex items-center justify-center flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-foreground leading-tight">
+                {t("collection")}
+              </h1>
+              <p className="text-xs text-muted">Manage your saved articles</p>
+            </div>
           </div>
 
           <div className="flex items-center gap-2 mb-6">
@@ -800,11 +805,13 @@ export function CollectionPage() {
         />
 
         <div className="mt-6">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="w-1 h-4 rounded-full bg-primary/60 flex-shrink-0" />
-            <h2 className="text-sm font-semibold text-foreground uppercase tracking-wider">
-              {t("allItem")}
-            </h2>
+          <div className="flex items-center justify-between mb-4 pb-3 border-b border-border">
+            <div className="flex items-center gap-2">
+              <div className="w-1 h-5 rounded-full bg-primary flex-shrink-0" />
+              <h2 className="text-sm font-semibold text-foreground">
+                {t("allItem")}
+              </h2>
+            </div>
           </div>
         </div>
 
@@ -836,14 +843,16 @@ export function CollectionPage() {
               </div>
             </>
           ) : !isFolderSwitching ? (
-            <div className="flex flex-col items-center justify-center py-20 text-center">
-              <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-xl bg-surface border border-border">
+            <div className="flex flex-col items-center justify-center py-20 text-center gap-4">
+              <div className="w-16 h-16 flex items-center justify-center rounded-2xl border border-border" style={{background: 'var(--surface)'}}>
                 <FileText className="w-8 h-8 text-muted" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">
-                {t("noCollectionFound")}
-              </h3>
-              <p className="text-muted mb-6">{t("noArticlesDescription")}</p>
+              <div>
+                <h3 className="text-lg font-semibold text-foreground mb-1">
+                  {t("noCollectionFound")}
+                </h3>
+                <p className="text-sm text-muted">{t("noArticlesDescription")}</p>
+              </div>
               {effectiveIsAuthenticated && (
                 <Button onClick={handleCreateNew}>{t("createNew")}</Button>
               )}

@@ -602,7 +602,7 @@ export default function GrammarChecker({ id }: GrammarCheckerProps) {
   return (
     <>
       <div className="flex flex-col h-[calc(100vh-var(--header-height))] overflow-hidden">
-        <div className="flex items-center justify-between gap-3 px-4 py-2.5 border-b border-border bg-surface/80 backdrop-blur-sm shadow-sm flex-shrink-0">
+        <div className="flex items-center justify-between gap-3 px-5 py-3 border-b border-border bg-surface flex-shrink-0">
           <div className="flex items-center gap-3">
             {canGoBack && (
               <button
@@ -614,11 +614,16 @@ export default function GrammarChecker({ id }: GrammarCheckerProps) {
               </button>
             )}
             {canGoBack && <div className="w-px h-5 bg-border" />}
-            <div className="flex items-center gap-2 pl-1 border-l-2 border-primary">
-              <SpellCheck size={18} className="text-primary" />
-              <h1 className="text-base font-semibold text-foreground">
-                {t("title")}
-              </h1>
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-primary/15 border border-primary/25 flex items-center justify-center flex-shrink-0">
+                <SpellCheck size={15} className="text-primary" />
+              </div>
+              <div>
+                <h1 className="text-sm font-semibold text-foreground leading-tight">
+                  {t("title")}
+                </h1>
+                <p className="text-[11px] text-muted leading-tight hidden sm:block">AI-powered grammar correction</p>
+              </div>
             </div>
           </div>
 
@@ -677,10 +682,10 @@ export default function GrammarChecker({ id }: GrammarCheckerProps) {
           </div>
         </div>
 
-        <div className="flex-1 flex items-stretch justify-center min-h-0 overflow-hidden p-5">
-          <div className="w-full max-w-6xl border border-border/70 rounded-xl bg-surface/50 shadow-lg ring-1 ring-border/30 overflow-hidden flex flex-col min-h-0">
+        <div className="flex-1 flex items-stretch justify-center min-h-0 overflow-hidden p-4">
+          <div className="w-full max-w-6xl border border-border rounded-xl overflow-hidden flex flex-col min-h-0 shadow-xl" style={{background: 'var(--surface)'}}>
             {isProcessing && (
-              <div className="flex items-center gap-3 px-5 py-2 border-b border-border bg-background/50">
+              <div className="flex items-center gap-3 px-5 py-2 border-b border-border" style={{background: 'var(--bg)'}}>
                 <div className="flex items-center gap-1.5 rounded-full border border-border bg-surface/70 px-3 py-1 text-xs text-muted max-w-[260px]">
                   <RefreshCw className="w-3 h-3 animate-spin text-primary" />
                   <span className="truncate">{t("checking")}</span>
@@ -690,8 +695,11 @@ export default function GrammarChecker({ id }: GrammarCheckerProps) {
 
             <div className="flex flex-col lg:flex-row flex-1 min-h-0">
               <div className="flex-1 flex flex-col border-b lg:border-b-0 lg:border-r border-border min-h-0 overflow-hidden">
-                <div className="flex items-center gap-2 px-4 py-2 border-b border-border/50 bg-background/30">
-                  <span className="text-[11px] font-medium text-muted uppercase tracking-wider">Input</span>
+                <div className="flex items-center justify-between px-4 py-2.5 border-b border-border" style={{background: 'var(--bg)'}}>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span className="text-xs font-semibold text-foreground">Input</span>
+                  </div>
                 </div>
                 <div className="flex-1 min-h-0 p-4 overflow-y-auto relative" ref={outputScrollRef}>
                   {uploadedFileName && !hasResult && (
@@ -783,7 +791,7 @@ export default function GrammarChecker({ id }: GrammarCheckerProps) {
                   })()}
                 </div>
 
-                <div className="flex flex-col gap-2 sm:flex-row sm:h-12 sm:items-center sm:justify-between px-4 py-3 sm:py-0 border-t border-border bg-surface/30 flex-shrink-0">
+                <div className="flex flex-col gap-2 sm:flex-row sm:h-14 sm:items-center sm:justify-between px-4 py-3 sm:py-0 border-t border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
                   <div className="flex items-center gap-3 min-w-0">
                     <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground">
                       <span className="font-semibold text-foreground">
@@ -874,11 +882,14 @@ export default function GrammarChecker({ id }: GrammarCheckerProps) {
               <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
                 {activeSuggestions.length > 0 ? (
                   <>
-                    <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-background/40 flex-shrink-0">
-                      <h3 className="text-[11px] font-medium text-muted uppercase tracking-wider flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
-                        {t("suggestionResult", { count: activeSuggestions.length })}
-                      </h3>
+                    <div className="flex items-center justify-between px-4 py-2.5 border-b border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
+                      <div className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                        <span className="text-xs font-semibold text-foreground">Suggestions</span>
+                      </div>
+                      <span className="text-[10px] text-red-400 font-medium bg-red-400/10 px-2 py-0.5 rounded-full">
+                        {activeSuggestions.length} {activeSuggestions.length === 1 ? 'issue' : 'issues'}
+                      </span>
                     </div>
 
                     <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-2">
@@ -958,47 +969,53 @@ export default function GrammarChecker({ id }: GrammarCheckerProps) {
                     </div>
                   </>
                 ) : (
-                  <div className="flex-1 flex flex-col items-center justify-center text-center p-6">
+                  <div className="flex-1 flex flex-col items-center justify-center text-center p-6 gap-4">
                     {isProcessing ? (
                       <>
-                        <RefreshCw size={24} className="text-primary animate-spin mb-4" />
+                        <RefreshCw size={28} className="text-primary animate-spin" />
                         <p className="text-sm text-muted">{t("checking")}</p>
                       </>
                     ) : hasResult && activeSuggestions.length === 0 && sentences.some((s) => hasSuggestion(s)) ? (
                       <>
-                        <div className="w-14 h-14 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
-                          <Check size={24} className="text-emerald-500" />
+                        <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                          <Check size={28} className="text-emerald-500" />
                         </div>
-                        <h3 className="text-sm font-semibold text-foreground mb-1.5">
-                          {t("allResolved")}
-                        </h3>
-                        <p className="text-xs text-muted max-w-xs">
-                          {t("allResolvedDescription")}
-                        </p>
+                        <div>
+                          <h3 className="text-sm font-semibold text-foreground mb-1">
+                            {t("allResolved")}
+                          </h3>
+                          <p className="text-xs text-muted max-w-[180px] leading-relaxed">
+                            {t("allResolvedDescription")}
+                          </p>
+                        </div>
                       </>
                     ) : hasResult && activeSuggestions.length === 0 ? (
                       <>
-                        <div className="w-14 h-14 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
-                          <Check size={24} className="text-emerald-500" />
+                        <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                          <Check size={28} className="text-emerald-500" />
                         </div>
-                        <h3 className="text-sm font-semibold text-foreground mb-1.5">
-                          {t("grammarCorrect")}
-                        </h3>
-                        <p className="text-xs text-muted max-w-xs">
-                          {t("grammarCorrectDescription")}
-                        </p>
+                        <div>
+                          <h3 className="text-sm font-semibold text-foreground mb-1">
+                            {t("grammarCorrect")}
+                          </h3>
+                          <p className="text-xs text-muted max-w-[180px] leading-relaxed">
+                            {t("grammarCorrectDescription")}
+                          </p>
+                        </div>
                       </>
                     ) : (
                       <>
-                        <div className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4">
-                          <SpellCheck size={24} className="text-primary" />
+                        <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                          <SpellCheck size={28} className="text-primary" />
                         </div>
-                        <h3 className="text-sm font-semibold text-foreground mb-1.5">
-                          {t("outputTitle")}
-                        </h3>
-                        <p className="text-xs text-muted max-w-xs">
-                          {t("outputDescription")}
-                        </p>
+                        <div>
+                          <h3 className="text-sm font-semibold text-foreground mb-1">
+                            {t("outputTitle")}
+                          </h3>
+                          <p className="text-xs text-muted max-w-[180px] leading-relaxed">
+                            {t("outputDescription")}
+                          </p>
+                        </div>
                       </>
                     )}
                   </div>

@@ -782,7 +782,7 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
     <>
       <div className="flex flex-col lg:flex-row h-[calc(100vh-var(--header-height))] gap-0 overflow-hidden">
         <main className="flex-1 overflow-y-auto bg-background/20 relative flex flex-col min-w-0">
-          <div className="sticky top-0 z-20 flex items-center justify-between gap-1.5 px-4 py-2.5 border-b border-border bg-surface/80 backdrop-blur-sm shadow-sm">
+          <div className="sticky top-0 z-20 flex items-center justify-between gap-1.5 px-5 py-3 border-b border-border bg-surface">
             <div className="flex items-center gap-3">
               {canGoBack && (
                 <button
@@ -794,9 +794,14 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
                 </button>
               )}
               {canGoBack && <div className="w-px h-5 bg-border" />}
-              <div className="flex items-center gap-2 pl-1 border-l-2 border-primary">
-                <Sparkles size={18} className="text-primary" />
-                <h1 className="text-base font-semibold text-foreground">{t("title")}</h1>
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-primary/15 border border-primary/25 flex items-center justify-center flex-shrink-0">
+                  <Sparkles size={15} className="text-primary" />
+                </div>
+                <div>
+                  <h1 className="text-sm font-semibold text-foreground leading-tight">{t("title")}</h1>
+                  <p className="text-[11px] text-muted leading-tight hidden sm:block">AI writing assistant</p>
+                </div>
               </div>
               {articleId && (
                 <>
@@ -971,33 +976,40 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
             : "w-full lg:w-[360px] xl:w-[400px]"
             } border-l border-border flex flex-col bg-surface/50 overflow-hidden transition-all duration-300 shrink-0`}
         >
-          <div className="px-4 py-3 border-b border-border flex-shrink-0 bg-background/40">
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-foreground flex items-center gap-2 pl-1 border-l-2 border-primary">
-                <MessageSquare size={16} className="text-primary" />
-                {t("chatTitle")}
-              </h2>
+          <div className="px-4 py-3 border-b border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
+            <div className="flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-lg bg-primary/15 border border-primary/25 flex items-center justify-center flex-shrink-0">
+                <MessageSquare size={13} className="text-primary" />
+              </div>
+              <div>
+                <h2 className="text-sm font-semibold text-foreground leading-tight">
+                  {t("chatTitle")}
+                </h2>
+                <p className="text-[11px] text-muted leading-tight">
+                  {hasSelectionInChat
+                    ? t("modifySelectedOrType")
+                    : requiresSelection
+                      ? t("selectToModify")
+                      : t("typeToGenerate")}
+                </p>
+              </div>
             </div>
-            <p className="text-xs text-muted mt-1.5 pl-3">
-              {hasSelectionInChat
-                ? t("modifySelectedOrType")
-                : requiresSelection
-                  ? t("selectToModify")
-                  : t("typeToGenerate")}
-            </p>
           </div>
 
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
             {messages.length === 0 && !hasSelectionInChat && (
-              <div className="flex flex-col items-center justify-center h-full text-center">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-3">
-                  <Sparkles size={22} className="text-primary" />
+              <div className="flex flex-col items-center justify-center h-full text-center gap-3">
+                <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                  <Sparkles size={24} className="text-primary" />
                 </div>
-                <p className="text-sm text-muted">
-                  {requiresSelection
-                    ? t("selectToModify")
-                    : t("typeToStart")}
-                </p>
+                <div>
+                  <p className="text-sm font-medium text-foreground mb-1">
+                    {requiresSelection ? t("selectToModify") : t("typeToStart")}
+                  </p>
+                  <p className="text-xs text-muted max-w-[180px] leading-relaxed">
+                    {requiresSelection ? "Select text in the editor to get started" : "Ask anything to generate content"}
+                  </p>
+                </div>
               </div>
             )}
 

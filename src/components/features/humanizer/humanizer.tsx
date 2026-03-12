@@ -478,7 +478,7 @@ export default function Humanizer({ id }: HumanizerProps) {
   return (
     <>
       <div className="flex flex-col h-[calc(100vh-var(--header-height))] overflow-hidden">
-        <div className="flex items-center justify-between gap-3 px-4 py-2.5 border-b border-border bg-surface/80 backdrop-blur-sm shadow-sm flex-shrink-0">
+        <div className="flex items-center justify-between gap-3 px-5 py-3 border-b border-border bg-surface flex-shrink-0">
           <div className="flex items-center gap-3">
             {canGoBack && (
               <button
@@ -490,11 +490,16 @@ export default function Humanizer({ id }: HumanizerProps) {
               </button>
             )}
             {canGoBack && <div className="w-px h-5 bg-border" />}
-            <div className="flex items-center gap-2 pl-1 border-l-2 border-primary">
-              <Sparkles size={18} className="text-primary" />
-              <h1 className="text-base font-semibold text-foreground">
-                {t("title")}
-              </h1>
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-primary/15 border border-primary/25 flex items-center justify-center flex-shrink-0">
+                <Sparkles size={15} className="text-primary" />
+              </div>
+              <div>
+                <h1 className="text-sm font-semibold text-foreground leading-tight">
+                  {t("title")}
+                </h1>
+                <p className="text-[11px] text-muted leading-tight hidden sm:block">AI-powered text humanizer</p>
+              </div>
             </div>
           </div>
 
@@ -559,9 +564,9 @@ export default function Humanizer({ id }: HumanizerProps) {
           </div>
         </div>
 
-        <div className="flex-1 flex items-stretch justify-center min-h-0 overflow-hidden p-5">
-          <div className="w-full max-w-6xl border border-border/70 rounded-xl bg-surface/50 shadow-lg ring-1 ring-border/30 overflow-hidden flex flex-col min-h-0">
-            <div className="flex items-center gap-3 px-5 py-3 border-b border-border bg-background/60 backdrop-blur-sm">
+        <div className="flex-1 flex items-stretch justify-center min-h-0 overflow-hidden p-4">
+          <div className="w-full max-w-6xl border border-border rounded-xl overflow-hidden flex flex-col min-h-0 shadow-xl" style={{background: 'var(--surface)'}}>
+            <div className="flex items-center gap-3 px-5 py-3 border-b border-border" style={{background: 'var(--bg)'}}>
               <div className="w-48">
                 <Select
                   options={writingStyleOptions}
@@ -601,8 +606,11 @@ export default function Humanizer({ id }: HumanizerProps) {
 
             <div className="flex flex-col lg:flex-row flex-1 min-h-0">
               <div className="flex-1 flex flex-col border-b lg:border-b-0 lg:border-r border-border min-h-0 overflow-hidden">
-                <div className="flex items-center gap-2 px-4 py-2 border-b border-border/50 bg-background/30">
-                  <span className="text-[11px] font-medium text-muted uppercase tracking-wider">Input</span>
+                <div className="flex items-center justify-between px-4 py-2.5 border-b border-border" style={{background: 'var(--bg)'}}>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span className="text-xs font-semibold text-foreground">Input</span>
+                  </div>
                 </div>
                 <div className={cn(
                   "flex-1 min-h-0 p-4 overflow-hidden",
@@ -635,7 +643,7 @@ export default function Humanizer({ id }: HumanizerProps) {
                   />
                 </div>
 
-                <div className="flex flex-col gap-2 sm:flex-row sm:h-12 sm:items-center sm:justify-between px-4 py-3 sm:py-0 border-t border-border bg-surface/30 flex-shrink-0">
+                <div className="flex flex-col gap-2 sm:flex-row sm:h-14 sm:items-center sm:justify-between px-4 py-3 sm:py-0 border-t border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
                   <div className="flex items-center gap-2 min-w-0">
                     <span className="inline-flex items-center gap-1 rounded-full border border-border bg-background/70 px-2 py-1 text-[11px] text-muted-foreground">
                       <span className="uppercase tracking-wide text-[10px]">
@@ -699,8 +707,14 @@ export default function Humanizer({ id }: HumanizerProps) {
               </div>
 
               <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
-                <div className="flex items-center gap-2 px-4 py-2 border-b border-border/50 bg-background/30">
-                  <span className="text-[11px] font-medium text-muted uppercase tracking-wider">Output</span>
+                <div className="flex items-center justify-between px-4 py-2.5 border-b border-border" style={{background: 'var(--bg)'}}>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-muted" />
+                    <span className="text-xs font-semibold text-foreground">Output</span>
+                  </div>
+                  {outputText && (
+                    <span className="text-[10px] text-primary font-medium bg-primary/10 px-2 py-0.5 rounded-full">Ready</span>
+                  )}
                 </div>
                 <div
                   ref={outputScrollRef}
@@ -711,34 +725,32 @@ export default function Humanizer({ id }: HumanizerProps) {
                       {renderChangedMarkers(outputText)}
                     </p>
                   ) : progressMessage ? (
-                    <div className="flex flex-col items-center justify-center h-full text-center">
-                      <RefreshCw size={24} className="text-primary animate-spin mb-4" />
+                    <div className="flex flex-col items-center justify-center h-full text-center gap-3">
+                      <RefreshCw size={28} className="text-primary animate-spin" />
                       <p className="text-sm text-muted">{progressMessage}</p>
                     </div>
                   ) : (
-                    <div className="flex flex-col items-center justify-center h-full text-center">
-                      <div className="w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4">
-                        <Sparkles size={24} className="text-primary" />
+                    <div className="flex flex-col items-center justify-center h-full text-center gap-4">
+                      <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                        <Sparkles size={28} className="text-primary" />
                       </div>
-                      <h3 className="text-sm font-semibold text-foreground mb-1.5">
-                        {t("outputTitle")}
-                      </h3>
-                      <p className="text-xs text-muted max-w-xs">
-                        {t("outputDescription")}
-                      </p>
+                      <div>
+                        <h3 className="text-sm font-semibold text-foreground mb-1">
+                          {t("outputTitle")}
+                        </h3>
+                        <p className="text-xs text-muted max-w-[200px] leading-relaxed">
+                          {t("outputDescription")}
+                        </p>
+                      </div>
                     </div>
                   )}
                 </div>
 
                 {outputText && (
-                  <div className="flex items-center justify-end px-4 py-3 border-t border-border bg-surface/30 flex-shrink-0">
-                    <span className="inline-flex items-center gap-1 rounded-full border border-border bg-background/70 px-2 py-1 text-[11px] text-muted-foreground">
-                      <span className="uppercase tracking-wide text-[10px]">
-                        {t("wordCount")}
-                      </span>
-                      <span className="font-semibold text-foreground text-[10px]">
-                        {outputWordCount}
-                      </span>
+                  <div className="flex items-center justify-end px-4 py-3 border-t border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-border px-2.5 py-1 text-[11px] text-muted">
+                      <span className="uppercase tracking-wide text-[10px] font-medium">{t("wordCount")}</span>
+                      <span className="font-bold text-foreground text-[11px]">{outputWordCount}</span>
                     </span>
                   </div>
                 )}

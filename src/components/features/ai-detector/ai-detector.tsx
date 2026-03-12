@@ -310,7 +310,7 @@ export default function AiDetector({ id }: AiDetectorProps) {
   return (
     <>
       <div className="flex flex-col h-[calc(100vh-var(--header-height))] overflow-hidden">
-        <div className="flex items-center justify-between gap-3 px-4 py-2.5 border-b border-border bg-surface/80 backdrop-blur-sm shadow-sm flex-shrink-0">
+        <div className="flex items-center justify-between gap-3 px-5 py-3 border-b border-border bg-surface flex-shrink-0">
           <div className="flex items-center gap-3">
             {canGoBack && (
               <button
@@ -322,11 +322,16 @@ export default function AiDetector({ id }: AiDetectorProps) {
               </button>
             )}
             {canGoBack && <div className="w-px h-5 bg-border" />}
-            <div className="flex items-center gap-2 pl-1 border-l-2 border-primary">
-              <ScanSearch size={18} className="text-primary" />
-              <h1 className="text-base font-semibold text-foreground">
-                {t("title")}
-              </h1>
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-primary/15 border border-primary/25 flex items-center justify-center flex-shrink-0">
+                <ScanSearch size={15} className="text-primary" />
+              </div>
+              <div>
+                <h1 className="text-sm font-semibold text-foreground leading-tight">
+                  {t("title")}
+                </h1>
+                <p className="text-[11px] text-muted leading-tight hidden sm:block">AI-powered content detector</p>
+              </div>
             </div>
           </div>
 
@@ -373,11 +378,14 @@ export default function AiDetector({ id }: AiDetectorProps) {
           </div>
         </div>
 
-        <div className="flex-1 flex items-stretch min-h-0 p-5">
-          <div className="w-full max-w-6xl mx-auto border border-border/70 rounded-xl bg-surface/50 shadow-lg ring-1 ring-border/30 overflow-hidden flex flex-col lg:flex-row min-h-[500px]">
+        <div className="flex-1 flex items-stretch min-h-0 p-4">
+          <div className="w-full max-w-6xl mx-auto border border-border rounded-xl overflow-hidden flex flex-col lg:flex-row min-h-[500px] shadow-xl" style={{background: 'var(--surface)'}}>
             <div className="flex-[2] flex flex-col border-b lg:border-b-0 lg:border-r border-border min-h-0 min-w-0">
-              <div className="flex items-center gap-2 px-4 py-2 border-b border-border/50 bg-background/30 flex-shrink-0">
-                <span className="text-[11px] font-medium text-muted uppercase tracking-wider">Input</span>
+              <div className="flex items-center justify-between px-4 py-2.5 border-b border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <span className="text-xs font-semibold text-foreground">Input</span>
+                </div>
               </div>
               {uploadedFileName && (
                 <div className="flex-shrink-0 px-4 pt-3 pb-1">
@@ -443,7 +451,7 @@ export default function AiDetector({ id }: AiDetectorProps) {
                   />
                 </div>
               </div>
-              <div className="flex items-center justify-between px-4 py-3 border-t border-border bg-surface/30 flex-shrink-0">
+              <div className="flex items-center justify-between px-4 py-3 border-t border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
                 <div className="text-xs text-muted">
                   {t("wordCount")}: {wordCount}
                   {wordCount > 0 && wordCount < MIN_WORDS && (
@@ -501,41 +509,49 @@ export default function AiDetector({ id }: AiDetectorProps) {
               </div>
             </div>
 
-            <div className="flex-1 flex flex-col min-h-0 min-w-0 bg-background/30">
-              <div className="flex items-center gap-2 px-4 py-2 border-b border-border/50 bg-background/30 flex-shrink-0">
-                <span className="text-[11px] font-medium text-muted uppercase tracking-wider">Analysis</span>
+            <div className="flex-1 flex flex-col min-h-0 min-w-0">
+              <div className="flex items-center justify-between px-4 py-2.5 border-b border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-muted" />
+                  <span className="text-xs font-semibold text-foreground">Analysis</span>
+                </div>
+                {result && (
+                  <span className="text-[10px] text-primary font-medium bg-primary/10 px-2 py-0.5 rounded-full">Done</span>
+                )}
               </div>
               <div className="flex-1 p-4 overflow-y-auto flex flex-col">
                 {!result ? (
-                  <div className="flex flex-col items-center justify-center flex-1 text-center px-6 py-12 max-w-sm mx-auto">
-                    <div className="w-16 h-16 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-5">
+                  <div className="flex flex-col items-center justify-center flex-1 text-center px-6 py-12 max-w-sm mx-auto gap-4">
+                    <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
                       <ScanSearch size={28} className="text-primary" />
                     </div>
-                    <h3 className="text-base font-semibold text-foreground mb-1.5">
-                      {t("emptyStateTitle")}
-                    </h3>
-                    <p className="text-sm text-muted leading-relaxed mb-6">
-                      {t("emptyStateHint")}
-                    </p>
+                    <div>
+                      <h3 className="text-base font-semibold text-foreground mb-1">
+                        {t("emptyStateTitle")}
+                      </h3>
+                      <p className="text-sm text-muted leading-relaxed">
+                        {t("emptyStateHint")}
+                      </p>
+                    </div>
                     <div className="flex flex-wrap justify-center gap-2">
-                      <span className="inline-flex items-center rounded-full bg-surface border border-border/60 px-3 py-1.5 text-xs text-muted">
+                      <span className="inline-flex items-center rounded-full border border-border px-3 py-1.5 text-xs text-muted" style={{background: 'var(--bg)'}}>
                         {t("emptyStateTip1")}
                       </span>
-                      <span className="inline-flex items-center rounded-full bg-surface border border-border/60 px-3 py-1.5 text-xs text-muted">
+                      <span className="inline-flex items-center rounded-full border border-border px-3 py-1.5 text-xs text-muted" style={{background: 'var(--bg)'}}>
                         {t("emptyStateTip2")}
                       </span>
                     </div>
                   </div>
                 ) : (
                   <>
-                    <div className="mb-6 text-center py-4 px-4 rounded-xl bg-background/50 border border-border/50">
-                      <p className="text-4xl font-bold text-foreground tabular-nums">
+                    <div className="mb-6 text-center py-5 px-4 rounded-xl border border-border" style={{background: 'var(--bg)'}}>
+                      <p className="text-5xl font-bold text-foreground tabular-nums">
                         {result.aiScore >= result.humanScore
                           ? result.aiScore
                           : result.humanScore}
-                        %
+                        <span className="text-2xl">%</span>
                       </p>
-                      <p className="text-sm text-muted-foreground mt-1">
+                      <p className="text-xs text-muted mt-1.5 font-medium uppercase tracking-wide">
                         {result.aiScore >= result.humanScore
                           ? t("ofTextLikelyAi")
                           : t("ofTextLikelyHuman")}
@@ -578,7 +594,7 @@ export default function AiDetector({ id }: AiDetectorProps) {
                       </ResponsiveContainer>
                     </div>
 
-                    <div className="space-y-2 rounded-xl border border-border/50 bg-background/30 p-3">
+                    <div className="space-y-2 rounded-xl border border-border p-3" style={{background: 'var(--bg)'}}>
                       <div className="flex items-center justify-between gap-2 py-1">
                         <span className="text-sm text-muted-foreground flex items-center gap-1.5">
                           {t("aiGenerated")}
@@ -608,9 +624,12 @@ export default function AiDetector({ id }: AiDetectorProps) {
 
                     {result.sentences && result.sentences.length > 0 && (
                       <div className="mt-6 border-t border-border pt-4 flex-shrink-0 space-y-3">
-                        <p className="text-xs font-medium text-muted uppercase tracking-wide">
-                          Sentence analysis
-                        </p>
+                        <div className="flex items-center gap-2">
+                          <div className="w-1 h-4 rounded-full bg-primary/60 flex-shrink-0" />
+                          <p className="text-xs font-semibold text-foreground">
+                            Sentence Analysis
+                          </p>
+                        </div>
                         <div className="space-y-2 max-h-52 overflow-y-auto overflow-x-hidden pr-1">
                           {result.sentences.map((s, idx) => {
                             const isAiDominant = s.ai_score >= s.human_score;
