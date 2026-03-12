@@ -793,7 +793,7 @@ export default function Paraphraser({ id }: ParaphraserProps) {
                 </div>
 
                 {outputText && (
-                  <div className="flex items-center justify-between px-4 py-3 border-t border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
+                  <div className="flex items-center justify-between px-4 h-14 border-t border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
                     <div className="flex items-center gap-3">
                       <span className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground">
                         <span className="w-3 h-3 rounded-sm bg-red-500/20 flex-shrink-0" />

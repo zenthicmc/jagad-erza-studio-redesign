@@ -747,7 +747,7 @@ export default function Humanizer({ id }: HumanizerProps) {
                 </div>
 
                 {outputText && (
-                  <div className="flex items-center justify-end px-4 py-3 border-t border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
+                  <div className="flex items-center justify-end px-4 h-14 border-t border-border flex-shrink-0" style={{background: 'var(--bg)'}}>
                     <span className="inline-flex items-center gap-1.5 rounded-full border border-border px-2.5 py-1 text-[11px] text-muted">
                       <span className="uppercase tracking-wide text-[10px] font-medium">{t("wordCount")}</span>
                       <span className="font-bold text-foreground text-[11px]">{outputWordCount}</span>
