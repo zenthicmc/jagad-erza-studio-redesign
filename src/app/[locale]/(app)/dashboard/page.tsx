@@ -222,12 +222,12 @@ export default function DashboardPage() {
         {stats.map((stat) => (
           <div
             key={stat.key}
-            className={`relative overflow-hidden p-5 rounded-xl border ${stat.border} bg-surface hover:bg-surface-hover transition-all group shadow-lg ${stat.glow}`}
+            className={`relative overflow-hidden p-5 rounded-xl border border-border bg-surface hover:bg-surface-hover transition-all group`}
           >
             {/* Subtle top-edge accent */}
-            <div className={`absolute top-0 left-0 right-0 h-[2px] ${stat.bg} opacity-60`} />
+            <div className={`absolute top-0 left-0 right-0 h-[2px] opacity-60`} />
             <div className="flex items-center justify-between mb-3">
-              <div className={`p-2.5 rounded-xl ${stat.bg} border ${stat.border}`}>
+              <div className={`p-2.5 rounded-xl ${stat.bg} border border-border`}>
                 <span className={stat.color}>{stat.icon}</span>
               </div>
               <span

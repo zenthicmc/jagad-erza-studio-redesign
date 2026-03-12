@@ -1006,8 +1006,8 @@ export default function WritingAssistant({ id: initialId }: WritingAssistantProp
                   <p className="text-sm font-medium text-foreground mb-1">
                     {requiresSelection ? t("selectToModify") : t("typeToStart")}
                   </p>
-                  <p className="text-xs text-muted max-w-[180px] leading-relaxed">
-                    {requiresSelection ? "Select text in the editor to get started" : "Ask anything to generate content"}
+                  <p className="text-xs text-muted leading-relaxed">
+                    {requiresSelection ? t("typeToStart") : t("typeToWrite")}
                   </p>
                 </div>
               </div>

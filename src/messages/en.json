@@ -789,6 +789,8 @@
     "selectToModify": "Select text in the editor to modify it",
     "typeToGenerate": "Type your request to generate content",
     "typeToStart": "Type your request below to start generating content",
+    "typeToWrite": "Ask anything to generate content",
+    "typeToModify": "Type your instruction to modify the selected text",
     "typeWhatToWrite": "Type what you want to write about..."
   },
   "dashboard": {

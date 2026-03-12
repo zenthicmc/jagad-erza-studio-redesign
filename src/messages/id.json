@@ -788,6 +788,8 @@
     "selectToModify": "Pilih teks di editor untuk mengubahnya",
     "typeToGenerate": "Ketik permintaan Anda untuk menghasilkan konten",
     "typeToStart": "Ketik permintaan Anda di bawah untuk mulai menghasilkan konten",
+    "typeToWrite": "Tulis apa saja untuk menghasilkan konten",
+    "typeToModify": "Ketik instruksi Anda untuk mengubah teks yang dipilih",
     "typeWhatToWrite": "Tulis apa yang ingin Anda tulis..."
   },
   "dashboard": {
